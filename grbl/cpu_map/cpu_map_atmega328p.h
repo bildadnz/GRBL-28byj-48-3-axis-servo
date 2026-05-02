@@ -46,7 +46,7 @@
 #define DIRECTION_PORT    PORTD
 #define X_DIRECTION_BIT   6//5  // Uno Digital Pin 5
 #define Y_DIRECTION_BIT   7//6  // Uno Digital Pin 6
-#define Z_DIRECTION_BIT   0//7  // Uno Digital Pin 7
+#define Z_DIRECTION_BIT   6//7  // Uno Digital Pin 7
 #define DIRECTION_MASK    ((1<<X_DIRECTION_BIT)|(1<<Y_DIRECTION_BIT)|(1<<Z_DIRECTION_BIT)) // All direction bits
 
 // Define stepper driver enable/disable output pin.
@@ -57,15 +57,15 @@
 
 // Define homing/hard limit switch input pins and limit interrupt vectors. 
 // NOTE: All limit bit pins must be on the same port, but not on a port with other input pins (CONTROL).
-#define LIMIT_DDR        DDRB
-#define LIMIT_PIN        PINB
-#define LIMIT_PORT       PORTB
-#define X_LIMIT_BIT      1  // Uno Digital Pin 9
-#define Y_LIMIT_BIT      2  // Uno Digital Pin 10
+#define LIMIT_DDR        DDRD
+#define LIMIT_PIN        PIND
+#define LIMIT_PORT       PORTD
+#define X_LIMIT_BIT      6  // Uno Digital Pin 6
+#define Y_LIMIT_BIT      7  // Uno Digital Pin 7
 #ifdef VARIABLE_SPINDLE // Z Limit pin and spindle enabled swapped to access hardware PWM on Pin 11.  
-  #define Z_LIMIT_BIT	   4 // Uno Digital Pin 12
+  #define Z_LIMIT_BIT	   0 // Uno Digital Pin 12
 #else
-  #define Z_LIMIT_BIT    3  // Uno Digital Pin 11
+  #define Z_LIMIT_BIT    0  // Uno Digital Pin 11
 #endif
 #define LIMIT_MASK       ((1<<X_LIMIT_BIT)|(1<<Y_LIMIT_BIT)|(1<<Z_LIMIT_BIT)) // All limit bits
 #define LIMIT_INT        PCIE0  // Pin change interrupt enable pin
@@ -84,7 +84,7 @@
     #define SPINDLE_ENABLE_BIT    3  // Uno Digital Pin 11
   #endif
 #else
-  #define SPINDLE_ENABLE_BIT    4  // Uno Digital Pin 12
+  #define SPINDLE_ENABLE_BIT    5  // Uno Digital Pin 12
 #endif
 #ifndef USE_SPINDLE_DIR_AS_ENABLE_PIN
   #define SPINDLE_DIRECTION_DDR   DDRB

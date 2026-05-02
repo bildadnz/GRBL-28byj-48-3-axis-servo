@@ -8,7 +8,6 @@ Credits to costycnc who modified grbl from bipolar to unipolar: https://github.c
 
 Credits to robottini who did support the servo motor ... link to git https://github.com/robottini/grbl-servo
 
-I tested the code very well with 328p (Arduino Uno, Duemilanove etv), not with 2560 (Arduino Mega) because I did not do the alterations in the file cpu_map_atmega2560.h
-
+I have added another z-axis motor to be controlled by pin 8, 9, 10, 12. 
 
 

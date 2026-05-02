@@ -31,6 +31,7 @@ int main(void)
   //Inititialize costycnc port
   DDRD=0B111100;
   DDRC=0B00001111;
+  DDRB=0B00010111;
   
   // Initialize system upon power-up.
   serial_init();   // Setup serial baud rate and interrupts

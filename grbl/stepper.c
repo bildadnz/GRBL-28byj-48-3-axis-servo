@@ -22,6 +22,7 @@
 #include "grbl.h"
 int costyx=1;
 int costyy=1;
+int costyz=1;
 
 // Some useful constants.
 #define DT_SEGMENT (1.0/(ACCELERATION_TICKS_PER_SECOND*60.0)) // min/segment 
@@ -437,10 +438,33 @@ ISR(TIMER1_COMPA_vect)
     st.counter_z += st.exec_block->steps[Z_AXIS];
   #endif  
   if (st.counter_z > st.exec_block->step_event_count) {
-    st.step_outbits |= (1<<Z_STEP_BIT);
-    st.counter_z -= st.exec_block->step_event_count;
-    if (st.exec_block->direction_bits & (1<<Z_DIRECTION_BIT)) { sys.position[Z_AXIS]--; }
-    else { sys.position[Z_AXIS]++; }
+      st.step_outbits |= (1<<Z_STEP_BIT);
+      st.counter_z -= st.exec_block->step_event_count;
+      if (st.exec_block->direction_bits & (1<<Z_DIRECTION_BIT)) { 
+        sys.position[Z_AXIS]--; 
+        costyz=costyz-1;
+        if (costyz < 1) costyz=8;
+        if (costyz==1) PORTB=0B00001;
+        if (costyz==2) PORTB=0B00101;
+        if (costyz==3) PORTB=0B00100;
+        if (costyz==4) PORTB=0B00110;
+        if (costyz==5) PORTB=0B00010;
+        if (costyz==6) PORTB=0B10010;
+        if (costyz==7) PORTB=0B10000;
+        if (costyz==8) PORTB=0B10001;
+      }else { 
+        sys.position[Z_AXIS]++;
+        costyz=costyz+1;
+        if (costyz > 8) costyz=1;
+        if (costyz==1) PORTB=0B00001;
+        if (costyz==2) PORTB=0B00101;
+        if (costyz==3) PORTB=0B00100;
+        if (costyz==4) PORTB=0B00110;
+        if (costyz==5) PORTB=0B00010;
+        if (costyz==6) PORTB=0B10010;
+        if (costyz==7) PORTB=0B10000;
+        if (costyz==8) PORTB=0B10001;
+    }
   }  
 
   // During a homing cycle, lock out and prevent desired axes from moving.
